@@ -21,6 +21,8 @@ public class VMovieApp extends Application {
         sContext = this;
     }
 
+
+
     public static Context getContext() {
         return sContext;
     }

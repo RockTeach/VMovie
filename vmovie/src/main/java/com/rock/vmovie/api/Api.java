@@ -31,9 +31,9 @@ public class Api {
 
     private static final long CACHE_STALE_SEC = 60 * 60 * 24 * 2;
 
-    private static final String CACHE_CONTROL_CACHE = "only-if-cached, max-stale=" + CACHE_STALE_SEC;
+    public static final String CACHE_CONTROL_CACHE = "only-if-cached, max-stale=" + CACHE_STALE_SEC;
 
-    private static final String CACHE_CONTROL_AGE = "max-age=5";
+    public static final String CACHE_CONTROL_AGE = "max-age=5";
 
     private Api() {
         //缓存

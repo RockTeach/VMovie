@@ -13,5 +13,16 @@
     <color name="color_gray_1">#111111</color>
     <color name="color_gray_2">#222222</color>
 
+    <color name="color_alpha_0">#00ffffff</color>
+    <color name="color_alpha_3">#33ffffff</color>
+    <color name="color_alpha_6">#66ffffff</color>
+    <color name="color_alpha_9">#99ffffff</color>
+    <color name="color_alpha_c">#ccffffff</color>
+
+    <color name="color_alpha_black_3">#33000000</color>
+    <color name="color_alpha_black_6">#66000000</color>
+    <color name="color_alpha_black_9">#99000000</color>
+    <color name="color_alpha_black_c">#cc000000</color>
+
 
 </resources>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 
 import com.rock.teachlibrary.utils.LogUtils;
+import com.rock.teachlibrary.utils.ScreenUtil;
 
 
 public class Rock{
@@ -17,6 +18,7 @@ public class Rock{
     public static void init(Application application){
         sApp = application;
         LogUtils.logInit(BuildConfig.IS_DEBUG);
+        ScreenUtil.init(application);
     }
 
     public static Application getContext(){

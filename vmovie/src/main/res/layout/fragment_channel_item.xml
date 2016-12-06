@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/teach_channel_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/ic_launcher"/>
+
+
+    <Button
+        android:id="@+id/teach_channel_catename"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@drawable/channel_text_color"
+        android:textSize="17sp"
+        android:background="@drawable/channel_item_bg"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+
+</FrameLayout>
