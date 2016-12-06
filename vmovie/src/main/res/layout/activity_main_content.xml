@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="@color/color_black"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:id="@+id/teach_main_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/home_side"/>
+
+        <ImageView
+            android:id="@+id/teach_main_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/home_search"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="15dp"/>
+
+         <TextView
+             android:id="@+id/teach_main_title"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textSize="18sp"
+             android:textColor="@color/color_white"
+             android:layout_gravity="center"
+             android:text="系列"/>
+
+        <FrameLayout
+            android:id="@+id/teach_main_home_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/color_black"
+            android:layout_gravity="center">
+
+            <TextSwitcher
+                android:id="@+id/teach_main_first_page_new"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="120dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/color_gray_d"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:text="最新"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/color_gray_d"
+                    android:textSize="15sp"
+                    android:gravity="center"/>
+
+            </TextSwitcher>
+
+            <TextView
+                android:id="@+id/teach_main_first_page_channel"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="100dp"
+                android:textColor="@color/color_gray_9"
+                android:textSize="15sp"
+                android:text="频道"
+                android:gravity="center"/>
+
+            <View
+                android:id="@+id/teach_main_first_page_indicator"
+                android:layout_width="45dp"
+                android:layout_height="1dp"
+                android:background="@color/color_white"
+                android:layout_gravity="bottom"/>
+
+        </FrameLayout>
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/teach_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@mipmap/slide_bg"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/teach_main_cover_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="40dp"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/default_avatar"/>
+
+            <TextView
+                android:id="@+id/teach_main_cover_name"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/teach_main_cover_icon"
+                android:layout_centerHorizontal="true"
+                android:textSize="16sp"
+                android:text="点击登录"/>
+
+            <ImageView
+                android:id="@+id/teach_main_cover_set"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/side_set"
+                android:layout_toLeftOf="@id/teach_main_cover_icon"
+                android:layout_marginRight="30dp"
+                android:layout_centerVertical="true"
+                />
+
+            <ImageView
+                android:id="@+id/teach_main_cover_message"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/side_message"
+                android:layout_toRightOf="@id/teach_main_cover_icon"
+                android:layout_marginLeft="30dp"
+                android:layout_centerVertical="true"
+                />
+
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/teach_main_cover_subscribe"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/side_subscribe"
+                android:gravity="center"
+                android:textColor="@color/color_gray_6"
+                android:text="我的订阅"/>
+
+            <TextView
+                android:id="@+id/teach_main_cover_cache"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/side_cache"
+                android:gravity="center"
+                android:textColor="@color/color_gray_6"
+                android:text="我的缓存"/>
+
+            <TextView
+                android:id="@+id/teach_main_cover_likes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/side_likes"
+                android:gravity="center"
+                android:textColor="@color/color_gray_6"
+                android:text="我喜欢的"/>
+
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/teach_main_cover_controller"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/teach_main_cover_home"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:drawableLeft="@drawable/home_selector"
+                android:paddingLeft="35dp"
+                android:checked="true"
+                android:button="@null"
+                android:drawablePadding="8dp"
+                android:textColor="@drawable/main_textcolor_selector"
+                android:background="@drawable/main_radio_bg_selector"
+                android:text="首页"/>
+
+            <RadioButton
+                android:id="@+id/teach_main_cover_series"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:drawableLeft="@drawable/series_selector"
+                android:paddingLeft="35dp"
+                android:button="@null"
+                android:drawablePadding="8dp"
+                android:background="@drawable/main_radio_bg_selector"
+                android:textColor="@drawable/main_textcolor_selector"
+                android:text="系列"/>
+
+            <RadioButton
+                android:id="@+id/teach_main_cover_behind"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:drawableLeft="@drawable/behind_selector"
+                android:paddingLeft="35dp"
+                android:button="@null"
+                android:drawablePadding="8dp"
+                android:background="@drawable/main_radio_bg_selector"
+                android:textColor="@drawable/main_textcolor_selector"
+                android:text="幕后"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/teach_main_cover_close"
+        android:layout_gravity="bottom|right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:layout_marginRight="48dp"
+        android:src="@mipmap/side_close"/>
+
+
+
+</FrameLayout>

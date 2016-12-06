@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true">
+
+        <layer-list>
+
+            <item>
+
+                <color android:color="@color/color_gray_d"/>
+
+            </item>
+
+            <item android:left="5dp">
+
+                <color android:color="@color/color_gray_1"/>
+
+            </item>
+
+        </layer-list>
+
+    </item>
+
+</selector>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rock.vmovie.ui.main.activity.MainActivity">
+
+    <include
+        layout="@layout/activity_main_content"/>
+
+    <include
+        android:id="@+id/teach_main_cover"
+        layout="@layout/activity_main_cover"
+        android:visibility="gone"/>
+
+
+</FrameLayout>
