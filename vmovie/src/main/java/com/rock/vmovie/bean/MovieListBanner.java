@@ -12,7 +12,7 @@ public class MovieListBanner {
 
     private String msg;
 
-    private List<MovieBean> data;
+    private List<MoviewBannerBean> data;
 
     public String getStatus() {
         return status;
@@ -30,15 +30,15 @@ public class MovieListBanner {
         this.msg = msg;
     }
 
-    public List<MovieBean> getData() {
+    public List<MoviewBannerBean> getData() {
         return data;
     }
 
-    public void setData(List<MovieBean> data) {
+    public void setData(List<MoviewBannerBean> data) {
         this.data = data;
     }
 
-    public static class MovieBean {
+    public static class MoviewBannerBean {
 
         private String bannerid;
 

@@ -17,6 +17,7 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import com.rock.teachlibrary.base.BaseActivity;
+import com.rock.teachlibrary.utils.LogUtils;
 import com.rock.teachlibrary.utils.ToastUitl;
 import com.rock.vmovie.R;
 import com.rock.vmovie.R2;
@@ -30,6 +31,9 @@ import com.rock.vmovie.ui.search.activity.SearchActivity;
 import com.rock.vmovie.ui.set.activity.SetActivity;
 import com.rock.vmovie.utils.UserController;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -78,22 +82,6 @@ public class MainActivity extends BaseActivity {
     private int channelLeft;
 
 
-    void onTestClick(View v){
-        switch (v.getId()) {
-            case 0:
-                mSwitcher.setInAnimation(this,R.anim.new_title_next_in);
-                mSwitcher.setOutAnimation(this,R.anim.new_title_next_out);
-                mSwitcher.showNext();
-                break;
-            case 1:
-                mSwitcher.setInAnimation(this,R.anim.new_title_previous_in);
-                mSwitcher.setOutAnimation(this,R.anim.new_title_previous_out);
-                mSwitcher.showPrevious();
-                break;
-        }
-    }
-
-
     @Override
     public int getLayoutResId() {
         return R.layout.activity_main;
@@ -122,6 +110,25 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+        mRxManager.on(EventParams.MOVIE_TO_MAIN_CHANGE_UP_DATE, new Action1<String>() {
+            @Override
+            public void call(String s) {
+                LogUtils.loge("up->"+s);
+                mSwitcher.setInAnimation(mContext,R.anim.new_title_previous_in);
+                mSwitcher.setOutAnimation(mContext,R.anim.new_title_previous_out);
+                mSwitcher.setText(s);
+            }
+        });
+        mRxManager.on(EventParams.MOVIE_TO_MAIN_CHANGE_DOWN_DATE, new Action1<String>() {
+            @Override
+            public void call(String s) {
+                LogUtils.loge("down->"+s);
+                mSwitcher.setInAnimation(mContext,R.anim.new_title_next_in);
+                mSwitcher.setOutAnimation(mContext,R.anim.new_title_next_out);
+                mSwitcher.setText(s);
+            }
+        });
+
     }
 
     @Override

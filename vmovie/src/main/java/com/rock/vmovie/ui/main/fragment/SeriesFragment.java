@@ -51,7 +51,7 @@ public class SeriesFragment extends BaseFragment<SeriesListModel,SeriesListPrese
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                if (!mRefreshLayout.isRefreshing() && !adapter.isLoadMore() && layoutManager.findLastVisibleItemPosition() == adapter.getItemCount() - 3) {
+                if (adapter.isHaveMore() && !mRefreshLayout.isRefreshing() && !adapter.isLoadMore() && layoutManager.findLastVisibleItemPosition() == adapter.getItemCount() - 3) {
                     adapter.setLoadMore(true);
                     // 调用加载更多
                     mPresenter.getSeriesListRequest(++page,SIZE);
@@ -61,7 +61,7 @@ public class SeriesFragment extends BaseFragment<SeriesListModel,SeriesListPrese
         mRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
             @Override
             public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
-                return adapter.isLoadMore();
+                return adapter.isLoadMore() && adapter.isHaveMore();
             }
         });
         mPresenter.getSeriesListRequest(page,SIZE);
@@ -74,11 +74,17 @@ public class SeriesFragment extends BaseFragment<SeriesListModel,SeriesListPrese
 
     @Override
     public void returnSeriesList(SeriesList seriesList) {
-        if (adapter.isLoadMore()) {
+        if (adapter.isLoadMore() && adapter.isHaveMore()) {
             adapter.setLoadMore(false);
             adapter.addRes(seriesList.getData());
+            if (page == 7) {
+                adapter.setLoadMore(true);
+                adapter.setHaveMore(false);
+            }
         }else{
             adapter.updateRes(seriesList.getData());
+            adapter.setHaveMore(true);
+            adapter.setLoadMore(false);
             mRefreshLayout.setRefreshing(false);
         }
 
@@ -101,7 +107,7 @@ public class SeriesFragment extends BaseFragment<SeriesListModel,SeriesListPrese
 
     @Override
     public void onRefresh() {
-        mPresenter.getSeriesListRequest(++page,SIZE);
         page = 1;
+        mPresenter.getSeriesListRequest(page,SIZE);
     }
 }

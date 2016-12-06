@@ -12,9 +12,10 @@
         <ImageView
             android:id="@+id/teach_main_home"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
+            android:padding="10dp"
             android:src="@mipmap/home_side"/>
 
         <ImageView
@@ -43,7 +44,7 @@
 
             <TextSwitcher
                 android:id="@+id/teach_main_first_page_new"
-                android:layout_width="45dp"
+                android:layout_width="65dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="120dp">
 
@@ -66,7 +67,7 @@
 
             <TextView
                 android:id="@+id/teach_main_first_page_channel"
-                android:layout_width="45dp"
+                android:layout_width="65dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="100dp"
                 android:textColor="@color/color_gray_9"
@@ -77,6 +78,7 @@
             <View
                 android:id="@+id/teach_main_first_page_indicator"
                 android:layout_width="45dp"
+                android:layout_marginLeft="10dp"
                 android:layout_height="1dp"
                 android:background="@color/color_white"
                 android:layout_gravity="bottom"/>

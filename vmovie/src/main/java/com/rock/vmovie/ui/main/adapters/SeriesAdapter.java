@@ -25,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder> implements View.OnClickListener {
+public class SeriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private final Context mContext;
 
@@ -33,10 +33,21 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
 
     private LayoutInflater inflater;
 
-    public static final int TYPE_FOOTER = 100;
+    private static final int TYPE_FOOTER = 100;
 
     private boolean loadMore;
+
     private RecyclerView mRecyclerView;
+
+    private boolean haveMore = true;
+
+    public boolean isHaveMore() {
+        return haveMore;
+    }
+
+    public void setHaveMore(boolean haveMore) {
+        this.haveMore = haveMore;
+    }
 
     public boolean isLoadMore() {
         return loadMore;
@@ -46,17 +57,17 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         this.loadMore = loadMore;
     }
 
-    public SeriesAdapter(Context context, List<SeriesList.SeriesBean> data){
+    public SeriesAdapter(Context context, List<SeriesList.SeriesBean> data) {
         inflater = LayoutInflater.from(context);
         mContext = context;
         if (data != null) {
             this.data = data;
-        }else{
+        } else {
             this.data = new ArrayList<>();
         }
     }
 
-    public void updateRes(List<SeriesList.SeriesBean> data){
+    public void updateRes(List<SeriesList.SeriesBean> data) {
         if (data != null && data.size() != 0) {
             this.data.clear();
             this.data.addAll(data);
@@ -64,7 +75,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         }
     }
 
-    public void addRes(List<SeriesList.SeriesBean> data){
+    public void addRes(List<SeriesList.SeriesBean> data) {
         if (data != null && data.size() != 0) {
             this.data.addAll(data);
             notifyDataSetChanged();
@@ -73,55 +84,64 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return data != null ? data.size() > 0 ? loadMore ? data.size() + 1 : data.size() : 0 : 0;
+        return data != null ? loadMore ? data.size() + 1 : data.size() : 0;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = null;
         switch (viewType) {
             case TYPE_FOOTER:
-                itemView = inflater.inflate(R.layout.load_more,parent,false);
-                break;
+                itemView = inflater.inflate(R.layout.load_more, parent, false);
+                return new FooterViewHolder(itemView);
             default:
-                itemView = inflater.inflate(R.layout.fragment_series_item,parent,false);
-                break;
+                itemView = inflater.inflate(R.layout.fragment_series_item, parent, false);
+                return new ViewHolder(itemView);
         }
-        return new ViewHolder(itemView);
+
     }
+
 
     @Override
     public int getItemViewType(int position) {
         int itemCount = data.size();
-        if (position == itemCount){
+        if (position >= itemCount) {
             return TYPE_FOOTER;
         }
         return super.getItemViewType(position);
     }
 
-    public SeriesList.SeriesBean getItem(int position){
+    public SeriesList.SeriesBean getItem(int position) {
         return data.get(position);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int itemViewType = getItemViewType(position);
         LogUtils.loge(String.valueOf(itemViewType));
         switch (itemViewType) {
             case TYPE_FOOTER:
-                if (loadMore) {
-                    holder.itemView.setVisibility(View.VISIBLE);
-                }else{
-                    holder.itemView.setVisibility(View.GONE);
+                if (holder instanceof FooterViewHolder) {
+                    FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
+                    if (haveMore) {
+                        footerViewHolder.loadMore.setVisibility(View.VISIBLE);
+                        footerViewHolder.loadEnd.setVisibility(View.GONE);
+                    }else{
+                        footerViewHolder.loadMore.setVisibility(View.GONE);
+                        footerViewHolder.loadEnd.setVisibility(View.VISIBLE);
+                    }
                 }
                 break;
             default:
-                Glide.with(mContext).load(getItem(position).getImage()).into(holder.image);
-                holder.title.setText(getItem(position).getTitle());
-                holder.info.setText(String.format("已更新%s集  %s人已订阅",getItem(position).getUpdate_to(),getItem(position).getFollower_num()));
-                holder.subscribe.setChecked(!"0".equals(getItem(position).getIsfollow()));
-                holder.image.setOnClickListener(this);
-                holder.subscribe.setOnClickListener(this);
+                if (holder instanceof ViewHolder) {
+                    ViewHolder holderSeries = ((ViewHolder) holder);
+                    Glide.with(mContext).load(getItem(position).getImage()).into(holderSeries.image);
+                    holderSeries.title.setText(getItem(position).getTitle());
+                    holderSeries.info.setText(String.format("已更新%s集  %s人已订阅", getItem(position).getUpdate_to(), getItem(position).getFollower_num()));
+                    holderSeries.subscribe.setChecked(!"0".equals(getItem(position).getIsfollow()));
+                    holderSeries.image.setOnClickListener(this);
+                    holderSeries.subscribe.setOnClickListener(this);
+                }
                 break;
         }
     }
@@ -151,7 +171,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
                     if (UserController.isLogin()) {
                         // 做订阅操作
 
-                    }else{
+                    } else {
                         CheckBox checkBox = (CheckBox) v;
                         checkBox.setChecked(false);
                         Intent intent = new Intent(mContext, LoginActivity.class);
@@ -162,7 +182,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         }
     }
 
-    public View getItemView(View view){
+    public View getItemView(View view) {
         View parent = (View) view.getParent();
         if (parent.getLayoutParams() instanceof RecyclerView.LayoutParams) {
             return parent;
@@ -171,7 +191,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R2.id.teach_series_image)
         ImageView image;
         @BindView(R2.id.teach_series_title)
@@ -183,12 +203,21 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
 
         public ViewHolder(View itemView) {
             super(itemView);
-            try {
-                ButterKnife.bind(this,itemView);
-            }catch (Exception ignored){
-                ignored.printStackTrace();
-            }
+            ButterKnife.bind(this, itemView);
+        }
+    }
 
+    public static class FooterViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R2.id.teach_load_more)
+        View loadMore;
+
+        @BindView(R2.id.teach_load_end)
+        View loadEnd;
+
+        public FooterViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
