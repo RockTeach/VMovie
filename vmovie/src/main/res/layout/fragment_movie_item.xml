@@ -2,17 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:focusable="true"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/teach_movie_date"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center"
         android:background="@color/color_black"
-        android:textColor="@color/color_white"/>
+        android:gravity="center"
+        android:textColor="@color/color_white" />
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/teach_movie_click"
         android:layout_width="match_parent"
         android:layout_height="260dp">
 
@@ -20,32 +22,44 @@
             android:id="@+id/teach_movie_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:id="@+id/teach_movie_advert"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="20dp"
-            android:textColor="@drawable/channel_text_color"
-            android:textSize="12sp"
-            android:text="Advert"/>
-
-        <TextView
-            android:id="@+id/teach_movie_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/teach_movie_advert"
-            android:layout_margin="20dp"
-            android:textColor="@drawable/channel_text_color"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:text="Title"/>
+            android:layout_height="match_parent"
+            android:duplicateParentState="true"
+            android:background="@drawable/channel_item_bg">
 
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/teach_movie_advert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp"
+                android:text="Advert"
+                android:duplicateParentState="true"
+                android:textColor="@drawable/channel_text_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/teach_movie_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/teach_movie_advert"
+                android:layout_margin="20dp"
+                android:text="Title"
+                android:duplicateParentState="true"
+                android:textColor="@drawable/channel_text_color"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.rock.vmovie.ui.main.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
@@ -13,12 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rock.teachlibrary.utils.LogUtils;
 import com.rock.teachlibrary.widget.lineindicator.LinePageIndicator;
 import com.rock.teachlibrary.widget.viewpager.AutoScrollViewPager;
 import com.rock.vmovie.R;
 import com.rock.vmovie.R2;
 import com.rock.vmovie.bean.MovieList;
 import com.rock.vmovie.bean.MovieListBanner;
+import com.rock.vmovie.ui.moviedetail.activity.MovieDetailActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements MovieListBannerAdapter.OnItemClickListener, View.OnClickListener {
 
     private static final int HEADER_TYPE = 100;
 
@@ -42,9 +45,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private Context context;
 
-    private MovieListBannerAdapter adapter = new MovieListBannerAdapter(null);
+    private MovieListBannerAdapter adapter;
 
     private boolean loadMore;
+    private RecyclerView recyclerView;
 
     public boolean isLoadMore() {
         return loadMore;
@@ -62,13 +66,15 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else {
             this.data = new ArrayList<>();
         }
+        adapter = new MovieListBannerAdapter(null);
+        adapter.setOnItemClickListener(this);
     }
 
     public int getHeaderCount() {
         return 1;
     }
 
-    public void updateViewPager(List<MovieListBanner.MoviewBannerBean> movieListBanners){
+    public void updateViewPager(List<MovieListBanner.MoviewBannerBean> movieListBanners) {
         adapter.updateRes(movieListBanners);
     }
 
@@ -92,7 +98,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return data != null ? loadMore ? data.size() + 1 : data.size() : 0;
     }
 
-    public MovieList.MovieBean getItem(int position){
+    public MovieList.MovieBean getItem(int position) {
         position = position - getHeaderCount();
         return data.get(position);
     }
@@ -116,11 +122,20 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 itemView = inflater.inflate(R.layout.load_more, parent, false);
                 return new FooterViewHolder(itemView);
             case HEADER_TYPE:
-                itemView = inflater.inflate(R.layout.fragment_movie_list_header,parent,false);
+                itemView = inflater.inflate(R.layout.fragment_movie_list_header, parent, false);
                 return new HeaderViewHolder(itemView);
             default:
                 itemView = inflater.inflate(R.layout.fragment_movie_item, parent, false);
                 return new ViewHolder(itemView);
+        }
+
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        if (holder instanceof HeaderViewHolder) {
+            ((HeaderViewHolder) holder).viewPager.stopAutoScroll();
         }
     }
 
@@ -135,10 +150,14 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
                     if (headerViewHolder.viewPager.getAdapter() == null) {
                         headerViewHolder.viewPager.setAdapter(adapter);
-                        headerViewHolder.pageIndicator.setViewPager(200,headerViewHolder.viewPager);
-                        headerViewHolder.viewPager.setCurrentItem(adapter.getCount() / 2,false);
-                        headerViewHolder.viewPager.startAutoScroll();
+                        headerViewHolder.viewPager.setCurrentItem(adapter.getCount() / 2, false);
+                        headerViewHolder.pageIndicator.setViewPager(200, headerViewHolder.viewPager);
+                    } else {
+                        int currentItem = headerViewHolder.viewPager.getCurrentItem();
+                        headerViewHolder.viewPager.setAdapter(adapter);
+                        headerViewHolder.viewPager.setCurrentItem(currentItem);
                     }
+                    headerViewHolder.viewPager.startAutoScroll();
                 }
 
                 break;
@@ -161,14 +180,15 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     if (position - getHeaderCount() == 0) {
                         holderItem.movieDate.setVisibility(View.GONE);
                     } else {
-                        if (TextUtils.equals(dateParse(getItem(position).getPublish_time()), dateParse(getItem(position-1).getPublish_time()))) {
+                        if (TextUtils.equals(dateParse(getItem(position).getPublish_time()), dateParse(getItem(position - 1).getPublish_time()))) {
                             holderItem.movieDate.setVisibility(View.GONE);
                         } else {
                             holderItem.movieDate.setVisibility(View.VISIBLE);
                         }
                     }
-                    holder.itemView.setContentDescription(dateParse(getItem(position).getPublish_time()));
+                    holderItem.clickView.setOnClickListener(this);
 
+                    holder.itemView.setContentDescription(dateParse(getItem(position).getPublish_time()));
                 }
                 break;
         }
@@ -186,6 +206,34 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return String.format(Locale.CHINA, "%s / %d'%d\"", catename, durationInt / 60, durationInt % 60);
     }
 
+    @Override
+    public void onItemClick(int position) {
+//        MovieListBanner.MoviewBannerBean moviewBannerBean = adapter.getItem(position);
+        LogUtils.loge(String.valueOf(position));
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.recyclerView = recyclerView;
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        this.recyclerView = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (recyclerView != null) {
+            int adapterPosition = recyclerView.getChildAdapterPosition((View) v.getParent()) - getHeaderCount();
+            LogUtils.loge(String.valueOf(adapterPosition));
+            Intent intent = new Intent(context, MovieDetailActivity.class);
+            context.startActivity(intent);
+        }
+    }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -200,6 +248,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         @BindView(R2.id.teach_movie_title)
         TextView title;
+
+        @BindView(R2.id.teach_movie_click)
+        View clickView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -217,7 +268,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

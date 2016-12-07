@@ -14,7 +14,8 @@
             android:id="@+id/teach_movie_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="LinearLayoutManager"/>
+            app:layoutManager="LinearLayoutManager"
+            android:descendantFocusability="afterDescendants"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

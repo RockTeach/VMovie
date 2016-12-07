@@ -16,7 +16,7 @@ import android.view.animation.Interpolator;
 
 public class AutoScrollViewPager extends ViewPager {
 
-    public static final int DEFAULT_INTERVAL = 5 * 1000;
+    public static final int DEFAULT_INTERVAL = 3 * 1000;
 
     public static final int LEFT = 0;
     public static final int RIGHT = 1;

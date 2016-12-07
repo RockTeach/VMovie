@@ -15,9 +15,15 @@ import java.util.List;
  * Created by Rock on 16/12/7.
  */
 
-public class MovieListBannerAdapter extends PagerAdapter {
+public class MovieListBannerAdapter extends PagerAdapter implements View.OnClickListener {
 
     private List<MovieListBanner.MoviewBannerBean> data;
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public MovieListBannerAdapter(List<MovieListBanner.MoviewBannerBean> data){
         if (data != null) {
@@ -59,8 +65,29 @@ public class MovieListBannerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView imageView = new ImageView(container.getContext());
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setContentDescription(String.valueOf(position));
+        imageView.setOnClickListener(this);
         Glide.with(container.getContext()).load(getItem(position).getImage()).into(imageView);
         container.addView(imageView);
         return imageView;
     }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getContentDescription() != null) {
+            Integer position = Integer.parseInt(v.getContentDescription().toString());
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(position);
+            }
+        }
+    }
+
+    public interface OnItemClickListener{
+
+        void onItemClick(int position);
+
+    }
+
+
+
 }
