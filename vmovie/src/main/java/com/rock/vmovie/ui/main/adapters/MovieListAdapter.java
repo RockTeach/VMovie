@@ -3,6 +3,7 @@ package com.rock.vmovie.ui.main.adapters;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,9 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rock.teachlibrary.widget.lineindicator.LinePageIndicator;
+import com.rock.teachlibrary.widget.viewpager.AutoScrollViewPager;
 import com.rock.vmovie.R;
 import com.rock.vmovie.R2;
 import com.rock.vmovie.bean.MovieList;
+import com.rock.vmovie.bean.MovieListBanner;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +42,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private Context context;
 
+    private MovieListBannerAdapter adapter = new MovieListBannerAdapter(null);
+
     private boolean loadMore;
 
     public boolean isLoadMore() {
@@ -59,7 +65,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public int getHeaderCount() {
-        return 0;
+        return 1;
+    }
+
+    public void updateViewPager(List<MovieListBanner.MoviewBannerBean> movieListBanners){
+        adapter.updateRes(movieListBanners);
     }
 
     public void updateRes(List<MovieList.MovieBean> data) {
@@ -106,7 +116,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 itemView = inflater.inflate(R.layout.load_more, parent, false);
                 return new FooterViewHolder(itemView);
             case HEADER_TYPE:
-
+                itemView = inflater.inflate(R.layout.fragment_movie_list_header,parent,false);
                 return new HeaderViewHolder(itemView);
             default:
                 itemView = inflater.inflate(R.layout.fragment_movie_item, parent, false);
@@ -114,7 +124,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
@@ -122,6 +131,15 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                 break;
             case HEADER_TYPE:
+                if (holder instanceof HeaderViewHolder) {
+                    HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
+                    if (headerViewHolder.viewPager.getAdapter() == null) {
+                        headerViewHolder.viewPager.setAdapter(adapter);
+                        headerViewHolder.pageIndicator.setViewPager(200,headerViewHolder.viewPager);
+                        headerViewHolder.viewPager.setCurrentItem(adapter.getCount() / 2,false);
+                        headerViewHolder.viewPager.startAutoScroll();
+                    }
+                }
 
                 break;
             default:
@@ -191,8 +209,15 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R2.id.teach_movie_header_viewpager)
+        AutoScrollViewPager viewPager;
+
+        @BindView(R2.id.teach_movie_header_indicator)
+        LinePageIndicator pageIndicator;
+
         public HeaderViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
         }
     }
 

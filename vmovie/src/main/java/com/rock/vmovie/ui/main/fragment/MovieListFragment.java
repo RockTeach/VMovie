@@ -3,7 +3,6 @@ package com.rock.vmovie.ui.main.fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -34,7 +33,7 @@ public class MovieListFragment extends BaseFragment<MovieListModel, MovieListPre
 
     private int page = 1;
 
-    private int size = 20;
+    private static final int SIZE = 20;
 
     private String cacheString = "最新";
 
@@ -76,13 +75,13 @@ public class MovieListFragment extends BaseFragment<MovieListModel, MovieListPre
                 if (!refreshLayout.isRefreshing() && !adapter.isLoadMore() && adapter.getItemCount() == layoutManager.findLastVisibleItemPosition() + 3) {
                     // 加载更多
                     adapter.setLoadMore(true);
-                    mPresenter.getNewMovieListRequest(++page,size);
+                    mPresenter.getNewMovieListRequest(++page, SIZE);
                 }
             }
         });
 
 
-        mPresenter.getNewMovieListRequest(page, size);
+        mPresenter.getNewMovieListRequest(page, SIZE);
         mPresenter.getNewMoviewBanner();
     }
 
@@ -100,7 +99,7 @@ public class MovieListFragment extends BaseFragment<MovieListModel, MovieListPre
 
     @Override
     public void returnNewMovieBanner(MovieListBanner movieBanner) {
-
+        adapter.updateViewPager(movieBanner.getData());
     }
 
     @Override
@@ -121,7 +120,7 @@ public class MovieListFragment extends BaseFragment<MovieListModel, MovieListPre
     @Override
     public void onRefresh() {
         page = 1;
-        mPresenter.getNewMovieListRequest(page,size);
+        mPresenter.getNewMovieListRequest(page, SIZE);
 
     }
 }

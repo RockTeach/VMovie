@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.rock.teachlibrary.widget.viewpager.AutoScrollViewPager
+        android:id="@+id/teach_movie_header_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.rock.teachlibrary.widget.lineindicator.LinePageIndicator
+        android:id="@+id/teach_movie_header_indicator"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        app:selectedColor="@color/color_alpha_9"
+        app:unselectedColor="@color/color_alpha_3"
+        android:layout_height="30dp" />
+
+</FrameLayout>
