@@ -97,7 +97,7 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
         }
         //其它
         else {
-            _onError("网络异常");
+            _onError("状态异常");
         }
     }
 

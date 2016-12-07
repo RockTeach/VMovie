@@ -2,7 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff0000"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/teach_behind_tablayout"
+        android:layout_width="match_parent"
+        app:tabMode="scrollable"
+        app:tabTextColor="@color/color_gray_9"
+        app:tabSelectedTextColor="@color/color_black"
+        app:tabIndicatorColor="@color/color_black"
+        app:tabIndicatorHeight="1dp"
+        android:layout_height="50dp"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/teach_behind_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
 </LinearLayout>

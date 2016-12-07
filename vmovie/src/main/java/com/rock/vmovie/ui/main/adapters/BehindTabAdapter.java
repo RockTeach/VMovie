@@ -14,7 +14,9 @@ import com.bumptech.glide.Glide;
 import com.rock.teachlibrary.utils.LogUtils;
 import com.rock.vmovie.R;
 import com.rock.vmovie.R2;
+import com.rock.vmovie.bean.BehindList;
 import com.rock.vmovie.bean.SeriesList;
+import com.rock.vmovie.ui.behindtabdetail.activity.BehindTabDetailActivity;
 import com.rock.vmovie.ui.login.activity.LoginActivity;
 import com.rock.vmovie.utils.UserController;
 
@@ -25,11 +27,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SeriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private final Context mContext;
 
-    private List<SeriesList.SeriesBean> data;
+    private List<BehindList.BehindBean> data;
 
     private LayoutInflater inflater;
 
@@ -57,7 +59,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.loadMore = loadMore;
     }
 
-    public SeriesAdapter(Context context, List<SeriesList.SeriesBean> data) {
+    public BehindTabAdapter(Context context, List<BehindList.BehindBean> data) {
         inflater = LayoutInflater.from(context);
         mContext = context;
         if (data != null) {
@@ -67,7 +69,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public void updateRes(List<SeriesList.SeriesBean> data) {
+    public void updateRes(List<BehindList.BehindBean> data) {
         if (data != null && data.size() != 0) {
             this.data.clear();
             this.data.addAll(data);
@@ -75,7 +77,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public void addRes(List<SeriesList.SeriesBean> data) {
+    public void addRes(List<BehindList.BehindBean> data) {
         if (data != null && data.size() != 0) {
             this.data.addAll(data);
             notifyDataSetChanged();
@@ -95,7 +97,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 itemView = inflater.inflate(R.layout.load_more, parent, false);
                 return new FooterViewHolder(itemView);
             default:
-                itemView = inflater.inflate(R.layout.fragment_series_item, parent, false);
+                itemView = inflater.inflate(R.layout.fragment_behind_tab_item, parent, false);
                 return new ViewHolder(itemView);
         }
 
@@ -109,10 +111,6 @@ public class SeriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return TYPE_FOOTER;
         }
         return super.getItemViewType(position);
-    }
-
-    public SeriesList.SeriesBean getItem(int position) {
-        return data.get(position);
     }
 
     @Override
@@ -134,17 +132,19 @@ public class SeriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 break;
             default:
                 if (holder instanceof ViewHolder) {
-                    ViewHolder holderSeries = ((ViewHolder) holder);
-                    Glide.with(mContext).load(getItem(position).getImage()).into(holderSeries.image);
-                    holderSeries.title.setText(getItem(position).getTitle());
-                    holderSeries.info.setText(String.format("已更新%s集  %s人已订阅", getItem(position).getUpdate_to(), getItem(position).getFollower_num()));
-                    holderSeries.subscribe.setChecked(!"0".equals(getItem(position).getIsfollow()));
-                    holderSeries.describe.setText(getItem(position).getContent());
-                    holderSeries.image.setOnClickListener(this);
-                    holderSeries.subscribe.setOnClickListener(this);
+                    ViewHolder holderBehind = (ViewHolder) holder;
+                    holder.itemView.setOnClickListener(this);
+                    holderBehind.title.setText(getItem(position).getTitle());
+                    holderBehind.share.setText(getItem(position).getShare_num());
+                    holderBehind.collection.setText(getItem(position).getLike_num());
+                    Glide.with(mContext).load(getItem(position).getImage()).into(holderBehind.image);
                 }
                 break;
         }
+    }
+
+    public BehindList.BehindBean getItem(int position){
+        return data.get(position);
     }
 
     @Override
@@ -162,47 +162,29 @@ public class SeriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onClick(View v) {
         if (mRecyclerView != null) {
-            int position = mRecyclerView.getChildAdapterPosition(getItemView(v));
+            int position = mRecyclerView.getChildAdapterPosition(v);
             LogUtils.loge(String.valueOf(position));
-            switch (v.getId()) {
-                case R.id.teach_series_image:
-
-                    break;
-                case R.id.teach_series_subscribe:
-                    if (UserController.isLogin()) {
-                        // 做订阅操作
-
-                    } else {
-                        CheckBox checkBox = (CheckBox) v;
-                        checkBox.setChecked(false);
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        mContext.startActivity(intent);
-                    }
-                    break;
-            }
+            Intent intent = new Intent(mContext, BehindTabDetailActivity.class);
+            // 传值
+            mContext.startActivity(intent);
         }
     }
 
-    public View getItemView(View view) {
-        View parent = (View) view.getParent();
-        if (parent.getLayoutParams() instanceof RecyclerView.LayoutParams) {
-            return parent;
-        }
-        return getItemView(parent);
-    }
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R2.id.teach_series_image)
+
+        @BindView(R2.id.teach_behind_tab_image)
         ImageView image;
-        @BindView(R2.id.teach_series_title)
+
+        @BindView(R2.id.teach_behind_tab_title)
         TextView title;
-        @BindView(R2.id.teach_series_info)
-        TextView info;
-        @BindView(R2.id.teach_series_subscribe)
-        CheckBox subscribe;
-        @BindView(R2.id.teach_series_describe)
-        TextView describe;
+
+        @BindView(R2.id.teach_behind_tab_share)
+        TextView share;
+
+        @BindView(R2.id.teach_behind_tab_collection)
+        TextView collection;
 
         public ViewHolder(View itemView) {
             super(itemView);

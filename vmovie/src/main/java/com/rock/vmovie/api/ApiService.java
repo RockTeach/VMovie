@@ -1,10 +1,12 @@
 package com.rock.vmovie.api;
 
 
+import com.rock.vmovie.bean.BehindList;
 import com.rock.vmovie.bean.ChannelList;
 import com.rock.vmovie.bean.MovieListBanner;
 import com.rock.vmovie.bean.MovieList;
 import com.rock.vmovie.bean.SeriesList;
+import com.rock.vmovie.bean.TabList;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -31,4 +33,15 @@ public interface ApiService {
 //    /apiv3/cate/getList
     @GET("/apiv3/cate/getList")
     Observable<ChannelList> getChannelList(@Header("Cache-Control") String cacheControl);
+
+    //  幕后主题
+//    /apiv3/backstage/getCate
+    @GET("/apiv3/backstage/getCate")
+    Observable<TabList> getTabList(@Header("Cache-Control") String cacheControl);
+
+    // 幕后各主页面
+//    /apiv3/backstage/getPostByCate?p=1&size=10&cateid=47
+    @GET("/apiv3/backstage/getPostByCate")
+    Observable<BehindList> getBehindList(@Header("Cache-Control") String cacheControl,@Query("p")int page,@Query("size") int size,@Query("cateid")String cateid);
+
 }

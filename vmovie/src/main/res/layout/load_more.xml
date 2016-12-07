@@ -13,7 +13,7 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@android:style/Widget.ProgressBar.Small"/>
+            style="@style/Widget.AppCompat.ProgressBar"/>
 
         <TextView
             android:layout_width="wrap_content"
