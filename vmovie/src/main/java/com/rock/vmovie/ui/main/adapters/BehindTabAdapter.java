@@ -16,6 +16,7 @@ import com.rock.vmovie.R;
 import com.rock.vmovie.R2;
 import com.rock.vmovie.bean.BehindList;
 import com.rock.vmovie.bean.SeriesList;
+import com.rock.vmovie.constants.DataParams;
 import com.rock.vmovie.ui.behindtabdetail.activity.BehindTabDetailActivity;
 import com.rock.vmovie.ui.login.activity.LoginActivity;
 import com.rock.vmovie.utils.UserController;
@@ -166,6 +167,7 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             LogUtils.logd(String.valueOf(position));
             Intent intent = new Intent(mContext, BehindTabDetailActivity.class);
             // 传值
+            intent.putExtra(DataParams.BEHIND_TO_DETAIL_POSTID,getItem(position).getPostid());
             mContext.startActivity(intent);
         }
     }

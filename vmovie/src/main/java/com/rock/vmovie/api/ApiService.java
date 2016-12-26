@@ -1,6 +1,7 @@
 package com.rock.vmovie.api;
 
 
+import com.rock.vmovie.bean.BehindDetail;
 import com.rock.vmovie.bean.BehindList;
 import com.rock.vmovie.bean.ChannelList;
 import com.rock.vmovie.bean.MovieListBanner;
@@ -43,5 +44,10 @@ public interface ApiService {
 //    /apiv3/backstage/getPostByCate?p=1&size=10&cateid=47
     @GET("/apiv3/backstage/getPostByCate")
     Observable<BehindList> getBehindList(@Header("Cache-Control") String cacheControl,@Query("p")int page,@Query("size") int size,@Query("cateid")String cateid);
+
+    // 幕后详情
+//    /apiv3/post/view?postid=50757
+    @GET("/apiv3/post/view")
+    Observable<BehindDetail> getBehindDetail(@Header("Cache-Control") String cacheControl,@Query("postid")String postid);
 
 }
