@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="260dp"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/teach_channel_detail_click"
+        android:layout_width="match_parent"
+        android:layout_height="260dp">
+
+        <ImageView
+            android:id="@+id/teach_channel_detail_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/channel_item_bg"
+            android:duplicateParentState="true">
+
+
+            <TextView
+                android:id="@+id/teach_channel_detail_advert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp"
+                android:duplicateParentState="true"
+                android:text="Advert"
+                android:textColor="@drawable/channel_text_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/teach_channel_detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/teach_channel_detail_advert"
+                android:layout_margin="20dp"
+                android:duplicateParentState="true"
+                android:text="Title"
+                android:textColor="@drawable/channel_text_color"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</LinearLayout>
+

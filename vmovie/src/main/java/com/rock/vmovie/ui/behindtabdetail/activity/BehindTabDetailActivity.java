@@ -10,7 +10,6 @@ import com.rock.teachlibrary.utils.LogUtils;
 import com.rock.vmovie.R;
 import com.rock.vmovie.R2;
 import com.rock.vmovie.bean.BehindDetail;
-import com.rock.vmovie.constants.DataParams;
 import com.rock.vmovie.ui.behindtabdetail.contract.BehindDetailContract;
 import com.rock.vmovie.ui.behindtabdetail.model.BehindDetailModel;
 import com.rock.vmovie.ui.behindtabdetail.presenter.BehindDetailPresenter;
@@ -19,6 +18,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class BehindTabDetailActivity extends BaseActivity<BehindDetailModel,BehindDetailPresenter> implements BehindDetailContract.View{
+
+    public static final String BEHIND_TO_DETAIL_POSTID = "behind_to_detail_postid";
 
     @BindView(R2.id.teach_behind_tab_detail_web)
     WebView mWeb;
@@ -39,7 +40,7 @@ public class BehindTabDetailActivity extends BaseActivity<BehindDetailModel,Behi
         WebSettings settings = mWeb.getSettings();
         settings.setJavaScriptEnabled(true);
 
-        String postid = getIntent().getStringExtra(DataParams.BEHIND_TO_DETAIL_POSTID);
+        String postid = getIntent().getStringExtra(BEHIND_TO_DETAIL_POSTID);
         mPresenter.getBehindDetail(postid);
 
     }

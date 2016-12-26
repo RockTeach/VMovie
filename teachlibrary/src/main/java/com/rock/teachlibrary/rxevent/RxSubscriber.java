@@ -51,7 +51,7 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
     }
 
     public RxSubscriber(Context context) {
-        this(context, "加载中...", true);
+        this(context, "加载中...", false);
     }
 
     public RxSubscriber(Context context, boolean showDialog) {

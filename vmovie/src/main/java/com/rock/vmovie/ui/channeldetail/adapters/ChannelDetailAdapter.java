@@ -1,7 +1,6 @@
-package com.rock.vmovie.ui.main.adapters;
+package com.rock.vmovie.ui.channeldetail.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,21 +12,23 @@ import com.bumptech.glide.Glide;
 import com.rock.teachlibrary.utils.LogUtils;
 import com.rock.vmovie.R;
 import com.rock.vmovie.R2;
-import com.rock.vmovie.bean.BehindList;
-import com.rock.vmovie.ui.behindtabdetail.activity.BehindTabDetailActivity;
+import com.rock.vmovie.bean.ChannelDetail;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class ChannelDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private final Context mContext;
 
-    private List<BehindList.BehindBean> data;
+    private List<ChannelDetail.ChannelDetailBean> data;
 
     private LayoutInflater inflater;
 
@@ -55,7 +56,7 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.loadMore = loadMore;
     }
 
-    public BehindTabAdapter(Context context, List<BehindList.BehindBean> data) {
+    public ChannelDetailAdapter(Context context, List<ChannelDetail.ChannelDetailBean> data) {
         inflater = LayoutInflater.from(context);
         mContext = context;
         if (data != null) {
@@ -65,7 +66,7 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    public void updateRes(List<BehindList.BehindBean> data) {
+    public void updateRes(List<ChannelDetail.ChannelDetailBean> data) {
         if (data != null && data.size() != 0) {
             this.data.clear();
             this.data.addAll(data);
@@ -73,7 +74,7 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    public void addRes(List<BehindList.BehindBean> data) {
+    public void addRes(List<ChannelDetail.ChannelDetailBean> data) {
         if (data != null && data.size() != 0) {
             this.data.addAll(data);
             notifyDataSetChanged();
@@ -93,7 +94,7 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 itemView = inflater.inflate(R.layout.load_more, parent, false);
                 return new FooterViewHolder(itemView);
             default:
-                itemView = inflater.inflate(R.layout.fragment_behind_tab_item, parent, false);
+                itemView = inflater.inflate(R.layout.activity_channel_detail_item, parent, false);
                 return new ViewHolder(itemView);
         }
 
@@ -109,6 +110,10 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return super.getItemViewType(position);
     }
 
+    public ChannelDetail.ChannelDetailBean getItem(int position) {
+        return data.get(position);
+    }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int itemViewType = getItemViewType(position);
@@ -120,7 +125,7 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     if (haveMore) {
                         footerViewHolder.loadMore.setVisibility(View.VISIBLE);
                         footerViewHolder.loadEnd.setVisibility(View.GONE);
-                    } else {
+                    }else{
                         footerViewHolder.loadMore.setVisibility(View.GONE);
                         footerViewHolder.loadEnd.setVisibility(View.VISIBLE);
                     }
@@ -128,19 +133,19 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 break;
             default:
                 if (holder instanceof ViewHolder) {
-                    ViewHolder holderBehind = (ViewHolder) holder;
-                    holder.itemView.setOnClickListener(this);
-                    holderBehind.title.setText(getItem(position).getTitle());
-                    holderBehind.share.setText(getItem(position).getShare_num());
-                    holderBehind.collection.setText(getItem(position).getLike_num());
-                    Glide.with(mContext).load(getItem(position).getImage()).into(holderBehind.image);
+                    ViewHolder holderChannelDetail = ((ViewHolder) holder);
+                    holderChannelDetail.title.setText(getItem(position).getTitle());
+                    holderChannelDetail.advert.setText(timeParse(getItem(position).getCates().get(0).getCatename(),getItem(position).getDuration()));
+                    Glide.with(mContext).load(getItem(position).getImage()).into(holderChannelDetail.image);
+                    holderChannelDetail.clickView.setOnClickListener(this);
                 }
                 break;
         }
     }
 
-    public BehindList.BehindBean getItem(int position) {
-        return data.get(position);
+    public String timeParse(String catename, String duration) {
+        int durationInt = Integer.parseInt(duration);
+        return String.format(Locale.CHINA, "%s / %d'%d\"", catename, durationInt / 60, durationInt % 60);
     }
 
     @Override
@@ -158,29 +163,34 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onClick(View v) {
         if (mRecyclerView != null) {
-            int position = mRecyclerView.getChildAdapterPosition(v);
-            LogUtils.logd(String.valueOf(position));
-            Intent intent = new Intent(mContext, BehindTabDetailActivity.class);
-            // 传值
-            intent.putExtra(BehindTabDetailActivity.BEHIND_TO_DETAIL_POSTID,getItem(position).getPostid());
-            mContext.startActivity(intent);
+            int position = mRecyclerView.getChildAdapterPosition(getItemView(v));
+            LogUtils.loge(String.valueOf(position));
+
         }
+    }
+
+    public View getItemView(View view) {
+        View parent = (View) view.getParent();
+        if (parent.getLayoutParams() instanceof RecyclerView.LayoutParams) {
+            return parent;
+        }
+        return getItemView(parent);
     }
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R2.id.teach_behind_tab_image)
+        @BindView(R2.id.teach_channel_detail_image)
         ImageView image;
 
-        @BindView(R2.id.teach_behind_tab_title)
+        @BindView(R2.id.teach_channel_detail_advert)
+        TextView advert;
+
+        @BindView(R2.id.teach_channel_detail_title)
         TextView title;
 
-        @BindView(R2.id.teach_behind_tab_share)
-        TextView share;
-
-        @BindView(R2.id.teach_behind_tab_collection)
-        TextView collection;
+        @BindView(R2.id.teach_channel_detail_click)
+        View clickView;
 
         public ViewHolder(View itemView) {
             super(itemView);

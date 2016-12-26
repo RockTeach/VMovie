@@ -3,6 +3,7 @@ package com.rock.vmovie.api;
 
 import com.rock.vmovie.bean.BehindDetail;
 import com.rock.vmovie.bean.BehindList;
+import com.rock.vmovie.bean.ChannelDetail;
 import com.rock.vmovie.bean.ChannelList;
 import com.rock.vmovie.bean.MovieListBanner;
 import com.rock.vmovie.bean.MovieList;
@@ -34,6 +35,12 @@ public interface ApiService {
 //    /apiv3/cate/getList
     @GET("/apiv3/cate/getList")
     Observable<ChannelList> getChannelList(@Header("Cache-Control") String cacheControl);
+
+    // 频道的详情
+//    /apiv3/post/getPostInCate?p=1&size=10&cateid=6
+    @GET("/apiv3/post/getPostInCate")
+    Observable<ChannelDetail> getChannelDetail(@Header("Cache-Control") String cacheControl,@Query("p") int page,@Query("size") int size,@Query("cateid") String cateid);
+
 
     //  幕后主题
 //    /apiv3/backstage/getCate
