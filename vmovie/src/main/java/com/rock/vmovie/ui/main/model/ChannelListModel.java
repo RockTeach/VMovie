@@ -14,6 +14,6 @@ import rx.Observable;
 public class ChannelListModel implements ChannelListContract.Model {
     @Override
     public Observable<ChannelList> getChannelList() {
-        return Api.getDefault().getChannelList(Api.CACHE_CONTROL_CACHE).compose(RxSchedulers.<ChannelList>io_main());
+        return Api.getDefault().getChannelList(Api.getCacheControl()).compose(RxSchedulers.<ChannelList>io_main());
     }
 }

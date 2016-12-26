@@ -68,7 +68,7 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        LogUtils.loge(String.valueOf(position + positionOffset));
+        LogUtils.logd(String.valueOf(position + positionOffset));
         if (mainActivity != null) {
             mainActivity.viewPagerOffset(position +  positionOffset);
         }

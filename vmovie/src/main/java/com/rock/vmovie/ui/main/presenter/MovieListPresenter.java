@@ -20,7 +20,7 @@ public class MovieListPresenter extends MovieListContract.Presenter {
 
             @Override
             protected void _onError(String message) {
-
+                mView.showErrorTip(message);
             }
         }));
     }
@@ -35,7 +35,7 @@ public class MovieListPresenter extends MovieListContract.Presenter {
 
             @Override
             protected void _onError(String message) {
-
+                mView.showErrorTip(message);
             }
         }));
     }

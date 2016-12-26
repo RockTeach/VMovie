@@ -20,7 +20,7 @@ public class SeriesListPresenter extends SeriesListContract.Presenter {
 
             @Override
             protected void _onError(String message) {
-
+                mView.showErrorTip(message);
             }
         }));
     }

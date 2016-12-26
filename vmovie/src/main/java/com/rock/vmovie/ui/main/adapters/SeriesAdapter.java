@@ -84,7 +84,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return data != null ? loadMore ? data.size() + 1 : data.size() : 0;
+        return data.size() > 0 ? data.size() + 1 : 0;
     }
 
     @Override

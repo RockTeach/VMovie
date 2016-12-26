@@ -95,7 +95,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return data != null ? loadMore ? data.size() + 1 : data.size() : 0;
+        return data.size() > 0 ? data.size() + getHeaderCount() +1 : 0;
     }
 
     public MovieList.MovieBean getItem(int position) {
@@ -209,7 +209,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onItemClick(int position) {
 //        MovieListBanner.MoviewBannerBean moviewBannerBean = adapter.getItem(position);
-        LogUtils.loge(String.valueOf(position));
+        LogUtils.logd(String.valueOf(position));
     }
 
     @Override

@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity {
         mRxManager.on(EventParams.MOVIE_TO_MAIN_CHANGE_UP_DATE, new Action1<String>() {
             @Override
             public void call(String s) {
-                LogUtils.loge("up->"+s);
+                LogUtils.logd("up->"+s);
                 mSwitcher.setInAnimation(mContext,R.anim.new_title_previous_in);
                 mSwitcher.setOutAnimation(mContext,R.anim.new_title_previous_out);
                 mSwitcher.setText(s);
@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity {
         mRxManager.on(EventParams.MOVIE_TO_MAIN_CHANGE_DOWN_DATE, new Action1<String>() {
             @Override
             public void call(String s) {
-                LogUtils.loge("down->"+s);
+                LogUtils.logd("down->"+s);
                 mSwitcher.setInAnimation(mContext,R.anim.new_title_next_in);
                 mSwitcher.setOutAnimation(mContext,R.anim.new_title_next_out);
                 mSwitcher.setText(s);

@@ -47,7 +47,7 @@ public class BehindFragment extends BaseFragment<TabListModel,TabListPresenter> 
         adapter = new TabPagerAdapter(getChildFragmentManager(),null);
         viewpager.setAdapter(adapter);
 
-        LogUtils.loge("获取Tab列表");
+        LogUtils.logd("获取Tab列表");
         mPresenter.getTabListRequest();
     }
 

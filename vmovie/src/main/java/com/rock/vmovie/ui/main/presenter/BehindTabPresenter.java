@@ -20,6 +20,7 @@ public class BehindTabPresenter extends BehindTabContract.Presenter {
 
             @Override
             protected void _onError(String message) {
+                mView.showErrorTip(message);
                 LogUtils.loge(message);
             }
         }));

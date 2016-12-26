@@ -86,7 +86,7 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return data != null ? loadMore ? data.size() + 1 : data.size() : 0;
+        return data.size() > 0 ? data.size() + 1 : 0;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     if (haveMore) {
                         footerViewHolder.loadMore.setVisibility(View.VISIBLE);
                         footerViewHolder.loadEnd.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         footerViewHolder.loadMore.setVisibility(View.GONE);
                         footerViewHolder.loadEnd.setVisibility(View.VISIBLE);
                     }
@@ -143,7 +143,7 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    public BehindList.BehindBean getItem(int position){
+    public BehindList.BehindBean getItem(int position) {
         return data.get(position);
     }
 
@@ -163,13 +163,12 @@ public class BehindTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onClick(View v) {
         if (mRecyclerView != null) {
             int position = mRecyclerView.getChildAdapterPosition(v);
-            LogUtils.loge(String.valueOf(position));
+            LogUtils.logd(String.valueOf(position));
             Intent intent = new Intent(mContext, BehindTabDetailActivity.class);
             // 传值
             mContext.startActivity(intent);
         }
     }
-
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
