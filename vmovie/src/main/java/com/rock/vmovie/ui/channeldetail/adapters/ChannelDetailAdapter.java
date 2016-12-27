@@ -1,6 +1,7 @@
 package com.rock.vmovie.ui.channeldetail.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.rock.teachlibrary.utils.LogUtils;
 import com.rock.vmovie.R;
 import com.rock.vmovie.R2;
 import com.rock.vmovie.bean.ChannelDetail;
+import com.rock.vmovie.ui.moviedetail.activity.MovieDetailActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -165,7 +167,11 @@ public class ChannelDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (mRecyclerView != null) {
             int position = mRecyclerView.getChildAdapterPosition(getItemView(v));
             LogUtils.loge(String.valueOf(position));
-
+            Intent intent = new Intent(mContext, MovieDetailActivity.class);
+            intent.putExtra(MovieDetailActivity.POSTID,getItem(position).getPostid());
+            intent.putExtra(MovieDetailActivity.LIKES,getItem(position).getLike_num());
+            intent.putExtra(MovieDetailActivity.SHARES,getItem(position).getShare_num());
+            mContext.startActivity(intent);
         }
     }
 
