@@ -1,11 +1,14 @@
 package com.rock.vmovie.api;
 
+import android.util.SparseArray;
+
 import com.rock.teachlibrary.utils.NetWorkUtil;
 import com.rock.vmovie.BuildConfig;
 import com.rock.vmovie.VMovieApp;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -21,10 +24,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Api {
 
-    private ApiService service;
-
-    private static Api sApi;
-
     private static final int READ_TIME_OUT = 10 * 1000;
 
     private static final int CONNECT_TIME_OUT = 10 * 1000;
@@ -35,7 +34,17 @@ public class Api {
 
     public static final String CACHE_CONTROL_AGE = "max-age=5";
 
+    public static final int DEFAULT_SERVER = 0;
+
+    public static final int SPECIAL_SERVER = 1;
+
+    public static SparseArray<ApiService> mServers = new SparseArray<>(2);
+
     private Api() {
+        this(DEFAULT_SERVER);
+    }
+
+    private Api(int type) {
         //缓存
         File cacheFile = new File(VMovieApp.getContext().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
@@ -83,25 +92,42 @@ public class Api {
                 .addInterceptor(headerInterceptor)
                 .cache(cache)
                 .build();
-
-
+        String baseUrl = BuildConfig.BaseUrl;
+        switch (type) {
+            case SPECIAL_SERVER:
+                baseUrl = BuildConfig.BaseUrlSpecial;
+                break;
+        }
         Retrofit retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(BuildConfig.BaseUrl)
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-        service = retrofit.create(ApiService.class);
+        switch (type) {
+            case SPECIAL_SERVER:
+                mServers.put(SPECIAL_SERVER, retrofit.create(ApiService.class));
+                break;
+            default:
+                mServers.put(DEFAULT_SERVER, retrofit.create(ApiService.class));
+        }
+
     }
 
 
     public static ApiService getDefault() {
-        if (sApi == null) {
+        return getService(DEFAULT_SERVER);
+    }
+
+    public static ApiService getService(int type) {
+        if (mServers.get(type) == null) {
             synchronized (Api.class) {
-                sApi = new Api();
+                if (mServers.get(type) == null) {
+                    new Api(type);
+                }
             }
         }
-        return sApi.service;
+        return mServers.get(type);
     }
 
 

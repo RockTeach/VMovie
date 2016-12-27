@@ -6,6 +6,7 @@ android {
 
     defaultConfig {
         buildConfigField("String","BaseUrl","\"http://app.vmoiver.com\"")
+        buildConfigField("String","BaseUrlSpecial","\"http://apiv2.vmovier.com\"")
         applicationId "com.rock.vmovie"
         minSdkVersion 15
         targetSdkVersion 24

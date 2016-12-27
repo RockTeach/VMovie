@@ -9,6 +9,7 @@ import com.rock.teachlibrary.base.BaseActivity;
 import com.rock.teachlibrary.utils.LogUtils;
 import com.rock.vmovie.R;
 import com.rock.vmovie.R2;
+import com.rock.vmovie.api.ApiService;
 import com.rock.vmovie.bean.BehindDetail;
 import com.rock.vmovie.ui.behindtabdetail.contract.BehindDetailContract;
 import com.rock.vmovie.ui.behindtabdetail.model.BehindDetailModel;
@@ -48,7 +49,7 @@ public class BehindTabDetailActivity extends BaseActivity<BehindDetailModel,Behi
     @Override
     public void returnBehindDetail(BehindDetail behindDetail) {
         LogUtils.logd("收到幕后数据");
-        mWeb.loadUrl(behindDetail.getData().getShare_link().getWeixin());
+        mWeb.loadUrl(String.format(ApiService.WEB_URL,behindDetail.getData().getPostid()));
     }
 
     @Override

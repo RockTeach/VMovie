@@ -227,9 +227,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onClick(View v) {
         if (recyclerView != null) {
-            int adapterPosition = recyclerView.getChildAdapterPosition((View) v.getParent()) - getHeaderCount();
+            int adapterPosition = recyclerView.getChildAdapterPosition((View) v.getParent());
             LogUtils.loge(String.valueOf(adapterPosition));
             Intent intent = new Intent(context, MovieDetailActivity.class);
+            intent.putExtra(MovieDetailActivity.POSTID,getItem(adapterPosition).getPostid());
+            intent.putExtra(MovieDetailActivity.LIKES,getItem(adapterPosition).getLike_num());
+            intent.putExtra(MovieDetailActivity.SHARES,getItem(adapterPosition).getShare_num());
             context.startActivity(intent);
         }
     }

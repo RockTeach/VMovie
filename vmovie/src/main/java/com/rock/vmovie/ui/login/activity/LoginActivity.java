@@ -2,6 +2,9 @@ package com.rock.vmovie.ui.login.activity;
 
 import com.rock.teachlibrary.base.BaseActivity;
 import com.rock.vmovie.R;
+import com.rock.vmovie.R2;
+
+import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity {
 
@@ -12,12 +15,19 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initPresenter() {
 
     }
 
     @Override
-    protected void initPresenter() {
+    protected void initView() {
 
     }
+
+    @OnClick(R2.id.login_back)
+    void clickBack(){
+        finish();
+    }
+
+
 }

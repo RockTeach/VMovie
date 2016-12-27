@@ -28,7 +28,8 @@
         <activity android:name=".ui.cache.activity.CacheActivity" />
         <activity android:name=".ui.set.activity.SetActivity" />
         <activity android:name=".ui.channeldetail.activity.ChannelDetailActivity" />
-        <activity android:name=".ui.moviedetail.activity.MovieDetailActivity" />
+        <activity android:name=".ui.moviedetail.activity.MovieDetailActivity"
+                    android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".ui.behindtabdetail.activity.BehindTabDetailActivity"></activity>
     </application>
 

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:id="@+id/movie_details_lan_like"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/color_white"
+        android:button="@null"
+        android:drawableLeft="@drawable/video_lan_like"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:text="1024" />
+
+    <Button
+        android:id="@+id/movie_details_lan_share"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/color_white"
+        android:button="@null"
+        android:drawableLeft="@mipmap/movie_detail_bottom_share_icon"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:text="1024" />
+
+    <Button
+        android:id="@+id/movie_details_lan_comment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/color_white"
+        android:button="@null"
+        android:drawableLeft="@mipmap/footer_comment_icon"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:text="1024" />
+
+    <Button
+        android:id="@+id/movie_details_lan_cache"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/color_white"
+        android:button="@null"
+        android:drawableLeft="@mipmap/details_cache"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:text="缓存" />
+
+</LinearLayout>
